@@ -56,7 +56,7 @@ TsdfServer::TsdfServer(const ros::NodeHandle& nh,
 
   nh_private_.param("pointcloud_queue_size", pointcloud_queue_size_,
                     pointcloud_queue_size_);
-  pointcloud_sub_ = nh_.subscribe("pointcloud", pointcloud_queue_size_,
+  pointcloud_sub_ = nh_private_.subscribe("pointcloud", pointcloud_queue_size_,
                                   &TsdfServer::insertPointcloud, this);
 
   mesh_pub_ = nh_private_.advertise<voxblox_msgs::Mesh>("mesh", 1, true);
@@ -73,7 +73,7 @@ TsdfServer::TsdfServer(const ros::NodeHandle& nh,
     // points that are not inside an object, but may also not be on a surface.
     // These will only be used to mark freespace beyond the truncation distance.
     freespace_pointcloud_sub_ =
-        nh_.subscribe("freespace_pointcloud", pointcloud_queue_size_,
+        nh_private_.subscribe("freespace_pointcloud", pointcloud_queue_size_,
                       &TsdfServer::insertFreespacePointcloud, this);
   }
 
